@@ -5,4 +5,3 @@ def connect_firebase():
     firebase = pyrebase.initialize_app(CONFIG)
     database = firebase.database()
     return database
-
