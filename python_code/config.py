@@ -11,3 +11,5 @@ CONFIG = {
     "appId": "1:944856282108:web:fa0efdbe1270b50c55b879",
     "measurementId": "G-880141RJ37",
 }
+
+FLASK_SERVER_PORT = ":5000"
