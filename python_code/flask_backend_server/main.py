@@ -1,8 +1,6 @@
-from flask import Flask, render_template, Response, request
+from flask import Flask, render_template, Response
+
 from camera import VideoCamera
-import time
-import threading
-import os
 from siren_script import Siren
 
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
