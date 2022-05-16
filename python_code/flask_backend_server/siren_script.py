@@ -1,5 +1,4 @@
-# import RPi.GPIO as GPIO
-from time import sleep
+import RPi.GPIO as GPIO
 
 
 class Siren:
@@ -10,12 +9,10 @@ class Siren:
 
     @classmethod
     def turn_on_siren(cls):
-        # cls.initialize_siren()
-        # GPIO.output(7, True)
-        print("SIREENNNNNNN ONNNNNNN")
+        cls.initialize_siren()
+        GPIO.output(7, True)
 
     @staticmethod
     def turn_off_siren():
-        # GPIO.output(7, False)
-        # GPIO.cleanup()
-        print("SIRENNNNN OFFFFFFFFFFFFFF")
+        GPIO.output(7, False)
+        GPIO.cleanup()
