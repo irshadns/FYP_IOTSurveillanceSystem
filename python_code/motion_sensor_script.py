@@ -23,7 +23,7 @@ motion_sensor = MotionSensorNotifier()
 while True:
     try:
         GPIO.add_event_detect(
-            motion_sensor.pir_pin, GPIO.RISING, callback=motion_sensor.send_notifier()
+            motion_sensor.pir_pin, GPIO.RISING, callback=motion_sensor.send_notifier
         )
         sleep(1)
     except KeyboardInterrupt:
