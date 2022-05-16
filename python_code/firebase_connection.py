@@ -5,17 +5,11 @@ from time import sleep
 
 
 class FirebaseHandling:
-    def __init__(self) -> None:
-        firebase = pyrebase.initialize_app(CONFIG)
-        database = firebase.database()
-        super(FirebaseHandling, self).__init__()
+    firebase = pyrebase.initialize_app(CONFIG)
+    database = firebase.database()
 
-    # def connect_firebase():
-    #     firebase = pyrebase.initialize_app(CONFIG)
-    #     database = firebase.database()
-    #     return database
-
-    def send_dynamic_urls_to_firebase(self):
+    @classmethod
+    def send_dynamic_urls_to_firebase(cls):
         prefix = "http://"
         host_name = socket.gethostname()
         ip_address = socket.gethostbyname(host_name)
@@ -27,29 +21,22 @@ class FirebaseHandling:
             "siren_on_url": siren_on_url,
             "siren_off_url": siren_off_url,
         }
-        # database = connect_firebase()
-        # sleep(1.5)
-        # database.child("pi_data").update(data)
         sleep(1.5)
-        self.database.child("pi_data").update(data)
+        cls.firebase.child("pi_data").update(data)
 
-    def send_initial_data(self):
+    @classmethod
+    def send_initial_data(cls):
         data = {
             "detection": False,
             "authenticated": False,
             "view": False,
         }
-        # database = connect_firebase()
-        # sleep(1.5)
-        # database.child("pi_data").update(data)
-        self.database.child("pi_data").update(data)
+        cls.database.child("pi_data").update(data)
 
-    def update_firebase_notification_variable(self, motion_detected: bool):
+    @classmethod
+    def update_firebase_notification_variable(cls, motion_detected: bool):
         data = {"detection": motion_detected}
-        # database = connect_firebase()
-        # sleep(1.5)
-        # database.child("pi_data").update(data)
-        self.database.child("pi_data").update(data)
+        cls.database.child("pi_data").update(data)
 
 
 FirebaseHandling.send_dynamic_urls_to_firebase()
