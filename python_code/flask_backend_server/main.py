@@ -5,7 +5,7 @@ from siren_script import Siren
 import RPi.GPIO as GPIO
 from firebase_connection import FirebaseHandling
 
-pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
+pi_camera = VideoCamera(flip=True)  # flip pi camera if upside down.
 
 app = Flask(__name__)
 
