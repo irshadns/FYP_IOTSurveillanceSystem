@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    FirebaseHandling.update_view_variable(view=True)
+    FirebaseHandling.update_view_and_motion_variable(view=True, motion_detection=False)
     return render_template("index.html")
 
 
@@ -29,10 +29,13 @@ def video_feed():
     )
 
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(7, GPIO.OUT)
+
 @app.route("/siren_on/", methods=["GET"])
 def siren_on():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(7, GPIO.OUT)
+    # GPIO.setmode(GPIO.BOARD)
+    # GPIO.setup(7, GPIO.OUT)
     GPIO.output(7, True)
     # Siren.turn_on_siren()
     return "Turning Siren ON !"
@@ -40,7 +43,9 @@ def siren_on():
 
 @app.route("/siren_off/", methods=["GET"])
 def siren_off():
-    Siren.turn_off_siren()
+    # Siren.turn_off_siren()
+    GPIO.output(7, False)
+    GPIO.cleanup()
     return "Turning Siren OFF !"
 
 

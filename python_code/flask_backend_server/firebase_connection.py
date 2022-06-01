@@ -28,7 +28,7 @@ class FirebaseHandling:
     def send_initial_data(cls):
         data = {
             "detection": False,
-            "authenticated": False,
+            # "authenticated": False,
             "view": False,
         }
         cls.database.child("pi_data").update(data)
@@ -39,9 +39,10 @@ class FirebaseHandling:
         cls.database.child("pi_data").update(data)
         
     @classmethod
-    def update_view_variable(cls, view:bool):
+    def update_view_and_motion_variable(cls, view:bool, motion_detection:bool):
         data = {
-            "view": view
+            "detection": motion_detection,
+            "view": view,
         }
         cls.database.child("pi_data").update(data)
     
