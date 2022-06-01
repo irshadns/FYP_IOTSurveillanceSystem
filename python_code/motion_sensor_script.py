@@ -1,32 +1,28 @@
-from time import sleep
+import time
 import RPi.GPIO as GPIO
 from firebase_connection import FirebaseHandling
 
+
+class MotionSensorNotifier():
+    # def __init__(self) -> None:
+    #     GPIO.setmode(GPIO.BCM)
+    #     pirPin = 26
+    #     GPIO.setup(pirPin, GPIO.IN)
+
+    def update_firebase_notification_variable():
+        FirebaseHandling.update_firebase_notification_variable(motion_detected=True)
+
+
 GPIO.setmode(GPIO.BCM)
-pir_pin = 26
-GPIO.setup(pir_pin, GPIO.IN)
-
-
-class MotionSensorNotifier:
-    def __init__(self) -> None:
-        self.motion_detected = False
-        super(MotionSensorNotifier, self).__init__()
-
-    def send_notifier(self):
-        is_motion_detected = self.motion_detected
-        FirebaseHandling.update_firebase_notification_variable(
-            motion_detected=is_motion_detected
-        )
-        self.motion_detected = False
-
-
-motion_sensor = MotionSensorNotifier()
-
+pirPin = 26
+GPIO.setup(pirPin, GPIO.IN)
 while True:
+    def motion_detection(pirPin):
+        MotionSensorNotifier.update_firebase_notification_variable()
+
     try:
-        GPIO.add_event_detect(
-            pir_pin, GPIO.RISING, callback=motion_sensor.send_notifier
-        )
-        sleep(1)
+        GPIO.add_event_detect(pirPin, GPIO.RISING, callback=motion_detection)
+        while 1:
+            time.sleep(1)
     except KeyboardInterrupt:
         GPIO.cleanup()

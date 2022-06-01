@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response
 
 from camera import VideoCamera
 from siren_script import Siren
+import RPi.GPIO as GPIO
 
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
@@ -28,7 +29,10 @@ def video_feed():
 
 @app.route("/siren_on/", methods=["GET"])
 def siren_on():
-    Siren.turn_on_siren()
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(7, GPIO.OUT)
+    GPIO.output(7, True)
+    # Siren.turn_on_siren()
     return "Turning Siren ON !"
 
 

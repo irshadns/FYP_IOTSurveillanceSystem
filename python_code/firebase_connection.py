@@ -37,7 +37,7 @@ class FirebaseHandling:
     def update_firebase_notification_variable(cls, motion_detected: bool):
         data = {"detection": motion_detected}
         cls.database.child("pi_data").update(data)
-
+        
 
 FirebaseHandling.send_dynamic_urls_to_firebase()
 FirebaseHandling.send_initial_data()

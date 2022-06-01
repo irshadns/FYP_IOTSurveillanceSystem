@@ -1,0 +1,8 @@
+Flask==2.1.2
+requests==2.27.1
+pyrebase4
+#Pyrebase==3.0.27
+numpy==1.22.3
+opencv-contrib-python==4.5.4.60
+imutils==0.5.4
+opencv-python==4.5.4.60
