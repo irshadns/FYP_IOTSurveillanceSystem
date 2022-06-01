@@ -3,7 +3,7 @@ from flask import Flask, render_template, Response
 from camera import VideoCamera
 from siren_script import Siren
 import RPi.GPIO as GPIO
-from python_code.firebase_connection import FirebaseHandling
+from firebase_connection import FirebaseHandling
 
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
