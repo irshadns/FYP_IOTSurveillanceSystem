@@ -7,12 +7,12 @@ from imutils.video.pivideostream import PiVideoStream
 
 class VideoCamera(object):
     def __init__(self, flip=False):
-        self.cm = PiVideoStream().start()
+        self.vs = PiVideoStream().start()
         self.flip = flip
         time.sleep(2.0)
 
     def __del__(self):
-        self.cm.stop()
+        self.vs.stop()
 
     def flip_if_needed(self, frame):
         if self.flip:
@@ -20,6 +20,6 @@ class VideoCamera(object):
         return frame
 
     def get_frame(self):
-        frame = self.flip_if_needed(self.cm.read())
+        frame = self.flip_if_needed(self.vs.read())
         ret, jpeg = cv2.imencode(".jpg", frame)
         return jpeg.tobytes()
