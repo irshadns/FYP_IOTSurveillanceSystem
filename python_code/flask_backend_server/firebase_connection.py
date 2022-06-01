@@ -22,7 +22,7 @@ class FirebaseHandling:
             "siren_off_url": siren_off_url,
         }
         sleep(1.5)
-        cls.firebase.child("pi_data").update(data)
+        cls.database.child("pi_data").update(data)
 
     @classmethod
     def send_initial_data(cls):
