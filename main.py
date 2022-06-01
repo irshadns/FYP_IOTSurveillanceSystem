@@ -51,7 +51,12 @@ def siren_on():
     # # GPIO.setup(7, GPIO.OUT)
     # # GPIO.output(7, True)
     # is_siren_on = Siren.turn_on_siren()
-    siren_control(siren=True)
+    # siren_control(siren=True)
+
+    pin = 13
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, True)
     return "Turning Siren ON !"
 
 
@@ -61,7 +66,14 @@ def siren_off():
     # # Siren.turn_off_siren()
     # GPIO.output(7, False)
     # GPIO.cleanup()
-    siren_control(siren=False)
+    # siren_control(siren=False)
+
+    GPIO.cleanup()
+    # pin = 13
+    # GPIO.setmode(GPIO.BOARD)
+    # GPIO.setup(pin, GPIO.OUT)
+    # GPIO.output(pin, False)
+
     return "Turning Siren OFF !"
 
 
