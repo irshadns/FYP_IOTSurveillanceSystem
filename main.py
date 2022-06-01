@@ -1,3 +1,4 @@
+from time import sleep
 from flask import Flask, render_template, Response
 
 from camera import VideoCamera
@@ -36,10 +37,18 @@ def siren_control(siren:bool):
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(7, GPIO.OUT)
     if siren:
-        while True:
-            GPIO.output(7, True)
-    GPIO.output(7, False)
-    GPIO.cleanup()
+        GPIO.output(7, True)
+        sleep(5)
+        GPIO.output(7, False)
+        GPIO.cleanup()
+        # while True:
+        #     GPIO.output(7, True)
+    # GPIO.output(7, False)
+    # GPIO.cleanup()
+    else:
+        GPIO.output(7, False)
+        GPIO.cleanup()
+
 
 
 @app.route("/siren_on/", methods=["GET"])
