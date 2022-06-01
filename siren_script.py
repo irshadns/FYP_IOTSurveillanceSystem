@@ -11,6 +11,7 @@ class Siren:
     def turn_on_siren(cls):
         cls.initialize_siren()
         GPIO.output(7, True)
+        return True
 
     @staticmethod
     def turn_off_siren():
