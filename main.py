@@ -8,7 +8,6 @@ from firebase_connection import FirebaseHandling
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
 app = Flask(__name__)
-global is_siren_on
 
 
 @app.route("/")
@@ -33,22 +32,33 @@ def video_feed():
 # GPIO.setmode(GPIO.BOARD)
 # GPIO.setup(7, GPIO.OUT)
 
+def siren_control(siren:bool):
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(7, GPIO.OUT)
+    if siren:
+        while True:
+            GPIO.output(7, True)
+    GPIO.output(7, False)
+    GPIO.cleanup()
+
+
 @app.route("/siren_on/", methods=["GET"])
 def siren_on():
-    # GPIO.setmode(GPIO.BOARD)
-    # GPIO.setup(7, GPIO.OUT)
-    # GPIO.output(7, True)
-    global is_siren_on
-    is_siren_on = Siren.turn_on_siren()
+    # # GPIO.setmode(GPIO.BOARD)
+    # # GPIO.setup(7, GPIO.OUT)
+    # # GPIO.output(7, True)
+    # is_siren_on = Siren.turn_on_siren()
+    siren_control(siren=True)
     return "Turning Siren ON !"
 
 
 @app.route("/siren_off/", methods=["GET"])
 def siren_off():
-    print("SIREN VALUE", is_siren_on)
-    # Siren.turn_off_siren()
-    GPIO.output(7, False)
-    GPIO.cleanup()
+    # print("SIREN VALUE", is_siren_on)
+    # # Siren.turn_off_siren()
+    # GPIO.output(7, False)
+    # GPIO.cleanup()
+    siren_control(siren=False)
     return "Turning Siren OFF !"
 
 
