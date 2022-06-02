@@ -33,7 +33,7 @@ GPIO.setup(pirPin, GPIO.IN)
 while True:
     try:
         GPIO.add_event_detect(
-            pirPin, GPIO.RISING, callback=MotionSensorNotifier.motion_detection
+            pirPin, GPIO.RISING, callback=MotionSensorNotifier.motion_detection(pirPin)
         )
         while 1:
             time.sleep(1)
