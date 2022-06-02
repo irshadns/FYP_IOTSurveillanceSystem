@@ -16,10 +16,14 @@ from firebase_connection import FirebaseHandling
 GPIO.setmode(GPIO.BCM)
 pirPin = 26
 GPIO.setup(pirPin, GPIO.IN)
+motion_times_detected = 0
 
 
 def motion_detection(pirPin):
-    FirebaseHandling.update_firebase_notification_variable(motion_detected=True)
+    motion_times_detected += 1
+    if motion_times_detected > 2:
+        FirebaseHandling.update_firebase_notification_variable(motion_detected=True)
+        motion_times_detected = 0
 
 
 while True:

@@ -55,6 +55,7 @@ def siren_on():
     # is_siren_on = Siren.turn_on_siren()
     # siren_control(siren=True)
 
+    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
     pin = 13
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(pin, GPIO.OUT)
@@ -72,6 +73,7 @@ def siren_off():
 
     print("Turning Siren OFF !")
     print("api endpoint: /siren_off/")
+    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
     GPIO.cleanup()
     # pin = 13
     # GPIO.setmode(GPIO.BOARD)
