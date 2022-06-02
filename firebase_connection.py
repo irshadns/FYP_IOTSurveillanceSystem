@@ -21,9 +21,6 @@ class FirebaseHandling:
             "siren_on_url": siren_on_url,
             "siren_off_url": siren_off_url,
         }
-        print('-'*50)
-        print("URLSS ", data)
-        print('-'*50)
         sleep(1.5)
         cls.database.child("pi_data").update(data)
 
@@ -31,7 +28,6 @@ class FirebaseHandling:
     def send_initial_data(cls):
         data = {
             "detection": False,
-            # "authenticated": False,
             "view": False,
         }
         cls.database.child("pi_data").update(data)
