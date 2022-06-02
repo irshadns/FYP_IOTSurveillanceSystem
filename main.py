@@ -47,6 +47,8 @@ def siren_control(siren: bool):
 
 @app.route("/siren_on/", methods=["GET"])
 def siren_on():
+    print("Turning Siren ON !")
+    print("api endpoint: /siren_on/")
     # # GPIO.setmode(GPIO.BOARD)
     # # GPIO.setup(7, GPIO.OUT)
     # # GPIO.output(7, True)
@@ -68,6 +70,8 @@ def siren_off():
     # GPIO.cleanup()
     # siren_control(siren=False)
 
+    print("Turning Siren OFF !")
+    print("api endpoint: /siren_off/")
     GPIO.cleanup()
     # pin = 13
     # GPIO.setmode(GPIO.BOARD)
