@@ -20,7 +20,9 @@ motion_times_detected = 0
 
 
 def motion_detection(pirPin):
+    global motion_times_detected
     motion_times_detected += 1
+    print("Motion Variable ", motion_times_detected)
     if motion_times_detected > 2:
         FirebaseHandling.update_firebase_notification_variable(motion_detected=True)
         motion_times_detected = 0
