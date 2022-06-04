@@ -1,88 +1,39 @@
-from time import sleep
-from flask import Flask, render_template, Response
-
+#Modified by smartbuilds.io
+#Date: 27.09.20
+#Desc: This web application serves a motion JPEG stream
+# main.py
+# import the necessary packages
+from flask import Flask, render_template, Response, request, send_from_directory
 from camera import VideoCamera
-from siren_script import Siren
-import RPi.GPIO as GPIO
-from firebase_connection import FirebaseHandling
+import os
 
-pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
+pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 
+# App Globals (do not edit)
 app = Flask(__name__)
 
-
-@app.route("/")
+@app.route('/')
 def index():
-    FirebaseHandling.update_view_and_motion_variable(view=True, motion_detection=False)
-    return render_template("index.html")
-
+    return render_template('index.html') #you can customze index.html here
 
 def gen(camera):
+    #get camera frame
     while True:
         frame = camera.get_frame()
-        yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n\r\n")
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
-
-@app.route("/video_feed")
+@app.route('/video_feed')
 def video_feed():
-    return Response(
-        gen(pi_camera), mimetype="multipart/x-mixed-replace; boundary=frame"
-    )
+    return Response(gen(pi_camera),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# Take a photo when pressing camera button
+@app.route('/picture')
+def take_picture():
+    pi_camera.take_picture()
+    return "None"
 
-# GPIO.setmode(GPIO.BOARD)
-# GPIO.setup(7, GPIO.OUT)
+if __name__ == '__main__':
 
-
-# def siren_control(siren: bool):
-#     pin = 13
-#     GPIO.setmode(GPIO.BOARD)
-#     GPIO.setup(pin, GPIO.OUT)
-#     if siren:
-#         GPIO.output(pin, True)
-#     else:
-#         GPIO.output(pin, False)
-#         GPIO.cleanup()
-
-
-@app.route("/siren_on/", methods=["GET"])
-def siren_on():
-    print("Turning Siren ON !")
-    print("api endpoint: /siren_on/")
-    # # GPIO.setmode(GPIO.BOARD)
-    # # GPIO.setup(7, GPIO.OUT)
-    # # GPIO.output(7, True)
-    # is_siren_on = Siren.turn_on_siren()
-    # siren_control(siren=True)
-
-    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
-    pin = 13
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, True)
-    return "Turning Siren ON !"
-
-
-@app.route("/siren_off/", methods=["GET"])
-def siren_off():
-    # print("SIREN VALUE", is_siren_on)
-    # # Siren.turn_off_siren()
-    # GPIO.output(7, False)
-    # GPIO.cleanup()
-    # siren_control(siren=False)
-
-    print("Turning Siren OFF !")
-    print("api endpoint: /siren_off/")
-    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
-    GPIO.cleanup()
-    # pin = 13
-    # GPIO.setmode(GPIO.BOARD)
-    # GPIO.setup(pin, GPIO.OUT)
-    # GPIO.output(pin, False)
-
-    return "Turning Siren OFF !"
-
-
-if __name__ == "__main__":
-
-    app.run(host="0.0.0.0", debug=False)
+    app.run(host='0.0.0.0', debug=False)
