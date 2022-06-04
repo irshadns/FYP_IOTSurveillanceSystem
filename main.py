@@ -34,15 +34,15 @@ def video_feed():
 # GPIO.setup(7, GPIO.OUT)
 
 
-def siren_control(siren: bool):
-    pin = 13
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(pin, GPIO.OUT)
-    if siren:
-        GPIO.output(pin, True)
-    else:
-        GPIO.output(pin, False)
-        GPIO.cleanup()
+# def siren_control(siren: bool):
+#     pin = 13
+#     GPIO.setmode(GPIO.BOARD)
+#     GPIO.setup(pin, GPIO.OUT)
+#     if siren:
+#         GPIO.output(pin, True)
+#     else:
+#         GPIO.output(pin, False)
+#         GPIO.cleanup()
 
 
 @app.route("/siren_on/", methods=["GET"])
