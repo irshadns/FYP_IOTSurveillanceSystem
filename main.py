@@ -3,9 +3,11 @@
 #Desc: This web application serves a motion JPEG stream
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response, request, send_from_directory
+import RPi.GPIO as GPIO
+from flask import Flask, render_template, Response
+
 from camera import VideoCamera
-import os
+from firebase_connection import FirebaseHandling
 
 pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 
@@ -33,6 +35,46 @@ def video_feed():
 def take_picture():
     pi_camera.take_picture()
     return "None"
+
+
+@app.route("/siren_on/", methods=["GET"])
+def siren_on():
+    print("Turning Siren ON !")
+    print("api endpoint: /siren_on/")
+    # # GPIO.setmode(GPIO.BOARD)
+    # # GPIO.setup(7, GPIO.OUT)
+    # # GPIO.output(7, True)
+    # is_siren_on = Siren.turn_on_siren()
+    # siren_control(siren=True)
+
+    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
+    pin = 13
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pin, GPIO.OUT)
+    GPIO.output(pin, True)
+    return "Turning Siren ON !"
+
+
+@app.route("/siren_off/", methods=["GET"])
+def siren_off():
+    # print("SIREN VALUE", is_siren_on)
+    # # Siren.turn_off_siren()
+    # GPIO.output(7, False)
+    # GPIO.cleanup()
+    # siren_control(siren=False)
+
+    print("Turning Siren OFF !")
+    print("api endpoint: /siren_off/")
+    FirebaseHandling.update_firebase_notification_variable(motion_detected=False)
+    GPIO.cleanup()
+    # pin = 13
+    # GPIO.setmode(GPIO.BOARD)
+    # GPIO.setup(pin, GPIO.OUT)
+    # GPIO.output(pin, False)
+
+    return "Turning Siren OFF !"
+
+
 
 if __name__ == '__main__':
 
